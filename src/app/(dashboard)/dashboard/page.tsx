@@ -104,6 +104,7 @@ export default async function DashboardPage() {
             <div className="space-y-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">Total Jobs</span>
               <p className="text-2xl font-bold text-neutral-900">{totalJobs}</p>
+              <span className="text-[10px] text-neutral-400 font-mono block">table: jobs</span>
             </div>
             <div className="p-2 border border-indigo-100 rounded-sm bg-indigo-50/70">
               <Briefcase className="h-4 w-4 text-indigo-600" />
@@ -117,6 +118,7 @@ export default async function DashboardPage() {
             <div className="space-y-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500">Candidates</span>
               <p className="text-2xl font-bold text-neutral-900">{totalCandidates}</p>
+              <span className="text-[10px] text-neutral-400 font-mono block">table: candidate1</span>
             </div>
             <div className="p-2 border border-blue-100 rounded-sm bg-blue-50/70">
               <Users className="h-4 w-4 text-blue-600" />
@@ -199,7 +201,12 @@ export default async function DashboardPage() {
         <Card className="lg:col-span-2 flex flex-col h-full">
           <div className="p-6 border-b border-neutral-100 flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-neutral-900">Recent Candidates</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-neutral-900">Recent Candidates</h3>
+                <span className="text-[10px] font-mono text-neutral-500 bg-neutral-100 px-1.5 py-0.5 rounded border border-neutral-200">
+                  table: candidate1
+                </span>
+              </div>
               <p className="text-[11px] text-neutral-500 mt-1">Status details of the latest invitees.</p>
             </div>
             <Link href="/dashboard/candidates" className="text-xs text-neutral-600 hover:text-neutral-900 font-medium inline-flex items-center gap-0.5">
@@ -270,7 +277,12 @@ export default async function DashboardPage() {
       <Card>
         <div className="p-6 border-b border-neutral-100 flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-neutral-900">Active Job Positions</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-neutral-900">Active Job Positions</h3>
+              <span className="text-[10px] font-mono text-neutral-500 bg-neutral-100 px-1.5 py-0.5 rounded border border-neutral-200">
+                table: jobs
+              </span>
+            </div>
             <p className="text-[11px] text-neutral-500 mt-1">Overview of currently posted jobs and application counts.</p>
           </div>
           <Link href="/dashboard/jobs" className="text-xs text-neutral-600 hover:text-neutral-900 font-medium inline-flex items-center gap-0.5">

@@ -8,11 +8,11 @@ const pool = new Pool({
 async function main() {
   try {
     await pool.query(`
-      ALTER TABLE candidates 
+      ALTER TABLE candidate1 
       ADD COLUMN IF NOT EXISTS status text DEFAULT 'Active',
       ADD COLUMN IF NOT EXISTS inactive_at timestamp(3) without time zone DEFAULT NULL;
     `);
-    console.log("Columns added successfully to candidates");
+    console.log("Columns added successfully to candidate1");
   } catch (err) {
     console.error(err);
   } finally {

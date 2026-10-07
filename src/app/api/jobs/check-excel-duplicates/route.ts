@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     // Try to ensure the unique constraint exists on job_code
     try {
-      await pool.query('ALTER TABLE job_descriptions ADD CONSTRAINT unique_job_code UNIQUE(job_code)');
+      await pool.query('ALTER TABLE job_descriptions1 ADD CONSTRAINT unique_job_code UNIQUE(job_code)');
     } catch (err: any) {
       // Ignore error if constraint already exists or if there are duplicate keys currently
     }
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     if (positionIds && positionIds.length > 0) {
       const posRes = await pool.query(
-        'SELECT job_code FROM job_descriptions WHERE job_code = ANY($1::text[])',
+        'SELECT job_code FROM job_descriptions1 WHERE job_code = ANY($1::text[])',
         [positionIds]
       );
       posRes.rows.forEach((r: any) => {
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       });
 
       const hashRes = await pool.query(
-        'SELECT content_hash FROM job_descriptions WHERE content_hash = ANY($1::text[])',
+        'SELECT content_hash FROM job_descriptions1 WHERE content_hash = ANY($1::text[])',
         [hashes]
       );
       hashRes.rows.forEach((r: any) => {

@@ -150,7 +150,7 @@ export interface MatchedCandidate {
   createdAt: string;
   created_at?: string;
 
-  // Joined from candidates:
+  // Joined from candidate1:
   phone?: string | null;
   current_job_title?: string | null;
   current_company?: string | null;

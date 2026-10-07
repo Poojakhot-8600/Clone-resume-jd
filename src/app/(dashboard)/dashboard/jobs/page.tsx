@@ -487,7 +487,7 @@ export default function JobsPage() {
             <FileText className="h-4 w-4 text-indigo-600" />
           </div>
           <p className="mt-2 text-2xl font-black text-neutral-900">{jobDescriptions.length}</p>
-          <span className="text-[11px] text-neutral-400">table: job_descriptions</span>
+          <span className="text-[11px] text-neutral-400 font-mono">table: job_descriptions1</span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs">
           <div className="flex items-center justify-between">
@@ -497,7 +497,7 @@ export default function JobsPage() {
           <p className="mt-2 text-2xl font-black text-emerald-700">
             {totalMatchedCandidates > 0 ? totalMatchedCandidates : totalCandidatesAcrossJDs}
           </p>
-          <span className="text-[11px] text-neutral-400">table: output</span>
+          <span className="text-[11px] text-neutral-400 font-mono">table: output1</span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs">
           <div className="flex items-center justify-between">
@@ -505,7 +505,7 @@ export default function JobsPage() {
             <Briefcase className="h-4 w-4 text-blue-600" />
           </div>
           <p className="mt-2 text-2xl font-black text-neutral-900">{jobs.length}</p>
-          <span className="text-[11px] text-neutral-400">table: jobs</span>
+          <span className="text-[11px] text-neutral-400 font-mono">table: jobs</span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs">
           <div className="flex items-center justify-between">
@@ -539,8 +539,11 @@ export default function JobsPage() {
           }`}
         >
           <Database className="h-4 w-4" />
-          <span>Job Descriptions (Supabase)</span>
-          <span className="ml-1.5 px-2 py-0.5 text-xs rounded-full bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100">
+          <span>Job Descriptions</span>
+          <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-neutral-100 text-neutral-600 border border-neutral-200">
+            table: job_descriptions1
+          </span>
+          <span className="ml-1 px-2 py-0.5 text-xs rounded-full bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100">
             {jobDescriptions.length}
           </span>
         </button>
@@ -562,13 +565,13 @@ export default function JobsPage() {
         </button>
       </div>
 
-      {/* Tab 1 Content: Supabase job_descriptions */}
+      {/* Tab 1 Content: Database job_descriptions1 */}
       {activeTab === 'descriptions' && (
         <div>
           {isLoadingDescriptions ? (
             <div className="py-24 flex flex-col items-center justify-center space-y-3 bg-white border border-neutral-200 rounded-xl shadow-xs">
               <div className="h-6 w-6 border-2 border-indigo-600 border-t-transparent animate-spin rounded-full" />
-              <span className="text-xs text-neutral-500">Loading job descriptions from Supabase...</span>
+              <span className="text-xs text-neutral-500">Loading job descriptions from table: job_descriptions1...</span>
             </div>
           ) : jobDescriptions.length === 0 ? (
             <div className="py-24 flex flex-col items-center justify-center text-center space-y-3 px-4 bg-white border border-neutral-200 rounded-xl shadow-xs">
@@ -576,9 +579,9 @@ export default function JobsPage() {
                 <Database className="h-6 w-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-neutral-900">No Job Descriptions in Supabase</h3>
+                <h3 className="text-sm font-semibold text-neutral-900">No Job Descriptions in table: job_descriptions1</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Upload a new job description to populate your Supabase table.
+                  Upload a new job description to populate your job_descriptions1 table.
                 </p>
               </div>
               <div className="mt-2">
@@ -592,11 +595,20 @@ export default function JobsPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="flex justify-end">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    <Database className="h-3.5 w-3.5" />
+                    table: job_descriptions1
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    candidate matches: output1
+                  </span>
+                </div>
                 <select
                   value={jdStatusFilter}
                   onChange={(e) => setJdStatusFilter(e.target.value)}
-                  className="text-xs rounded-sm border border-neutral-200 bg-white px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 cursor-pointer"
+                  className="text-xs rounded-sm border border-neutral-200 bg-white px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600 cursor-pointer self-end sm:self-auto"
                 >
                   <option value="All">All Status</option>
                   <option value="Active">Active</option>
@@ -738,6 +750,9 @@ export default function JobsPage() {
                   <h3 className="text-base font-bold text-neutral-900">
                     Matched Candidates ({selectedCandidateJob.candidatesCount})
                   </h3>
+                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-600 border border-neutral-200">
+                    table: output1
+                  </span>
                 </div>
                 <p className="text-xs text-neutral-500 mt-0.5">
                   Candidates matched for: <strong>{selectedCandidateJob.jobTitle}</strong>
@@ -755,7 +770,7 @@ export default function JobsPage() {
             <div className="flex-1 overflow-y-auto space-y-2">
               {!selectedCandidateJob.matchedCandidates || selectedCandidateJob.matchedCandidates.length === 0 ? (
                 <div className="py-12 text-center text-xs text-neutral-400">
-                  No candidate match scores recorded for this job code in <code className="font-mono">output</code>.
+                  No candidate match scores recorded for this job code in <code className="font-mono">output1</code>.
                 </div>
               ) : (
                 selectedCandidateJob.matchedCandidates.map((c, i) => (

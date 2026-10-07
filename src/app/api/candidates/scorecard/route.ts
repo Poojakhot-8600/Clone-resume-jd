@@ -56,8 +56,8 @@ export async function GET(request: Request) {
         c.years_of_experience as "years_of_experience",
         c.seniority as "candidate_seniority",
         COALESCE(c.candidate_location, c.candidate_address) as "location"
-      FROM output o
-      LEFT JOIN candidates c ON TRIM(c.candidate_id) = TRIM(o.candidate_id)
+      FROM output1 o
+      LEFT JOIN candidate1 c ON TRIM(c.candidate_id) = TRIM(o.candidate_id)
       WHERE 1=1
     `;
 
@@ -85,7 +85,7 @@ export async function GET(request: Request) {
 
     if (res.rows.length === 0) {
       return NextResponse.json(
-        { error: 'Candidate scorecard not found in output table' },
+        { error: 'Candidate scorecard not found in output1 table' },
         { status: 404 }
       );
     }

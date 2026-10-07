@@ -15,12 +15,12 @@ export async function POST(request: Request) {
     const fifteenDaysAgo = new Date();
     fifteenDaysAgo.setDate(now.getDate() - 15);
 
-    // Find and delete job_descriptions that have been Inactive for more than 15 days
+    // Find and delete job_descriptions1 that have been Inactive for more than 15 days
     let deletedJdsCount = 0;
     try {
       // First get the job codes of the ones we are about to delete
       const staleJdsRes = await pool.query(
-        `SELECT content_hash, job_code FROM job_descriptions 
+        `SELECT content_hash, job_code FROM job_descriptions1 
          WHERE status = 'Inactive' AND inactive_at < $1`,
         [fifteenDaysAgo.toISOString()]
       );
@@ -33,14 +33,14 @@ export async function POST(request: Request) {
         // Delete related output records to avoid foreign-key constraints
         if (jobCodes.length > 0) {
           await pool.query(
-            `DELETE FROM output WHERE job_code = ANY($1::text[])`,
+            `DELETE FROM output1 WHERE job_code = ANY($1::text[])`,
             [jobCodes]
           );
         }
 
-        // Delete the job_descriptions
+        // Delete the job_descriptions1
         const deleteRes = await pool.query(
-          `DELETE FROM job_descriptions WHERE content_hash = ANY($1::text[]) RETURNING *`,
+          `DELETE FROM job_descriptions1 WHERE content_hash = ANY($1::text[]) RETURNING *`,
           [hashes]
         );
         deletedJdsCount = deleteRes.rowCount || 0;
@@ -69,15 +69,15 @@ export async function POST(request: Request) {
         const pks = staleCandidates.map(c => c.id);
         const externalIds = staleCandidates.map(c => c.candidateId).filter(Boolean);
 
-        // Delete from output table first to avoid foreign-key constraint issues
+        // Delete from output1 table first to avoid foreign-key constraint issues
         if (externalIds.length > 0) {
           await pool.query(
-            `DELETE FROM output WHERE candidate_id = ANY($1::text[])`,
+            `DELETE FROM output1 WHERE candidate_id = ANY($1::text[])`,
             [externalIds]
           );
         }
 
-        // Delete from candidates table via Prisma (which also cascades to SlotBooking, Assessments)
+        // Delete from candidate1 table via Prisma (which also cascades to SlotBooking, Assessments)
         const deleted = await prisma.candidate.deleteMany({
           where: {
             id: { in: pks },

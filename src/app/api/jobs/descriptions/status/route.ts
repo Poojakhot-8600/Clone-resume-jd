@@ -19,7 +19,7 @@ export async function PUT(request: Request) {
     const inactiveAt = status === 'Inactive' ? new Date().toISOString() : null;
 
     const res = await pool.query(
-      `UPDATE job_descriptions 
+      `UPDATE job_descriptions1 
        SET status = $1, inactive_at = $2 
        WHERE content_hash = $3 
        RETURNING *`,

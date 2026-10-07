@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search')?.toLowerCase() || '';
 
-    // Query job_descriptions joined with candidate counts from output table
+    // Query job_descriptions1 joined with candidate counts from output1 table
     const res = await pool.query(`
       SELECT 
         jd.content_hash as "contentHash",
@@ -24,10 +24,10 @@ export async function GET(request: Request) {
         COALESCE(jd.status, 'Active') as "status",
         jd.inactive_at as "inactiveAt",
         COALESCE(m.candidates_count, 0)::int as "candidatesCount"
-      FROM job_descriptions jd
+      FROM job_descriptions1 jd
       LEFT JOIN (
         SELECT TRIM(job_code) as job_code, COUNT(DISTINCT candidate_id) as candidates_count
-        FROM output
+        FROM output1
         WHERE job_code IS NOT NULL
         GROUP BY TRIM(job_code)
       ) m ON TRIM(m.job_code) = TRIM(jd.job_code)
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
       );
     }
 
-    // Fetch matched candidates summary joined with candidate profiles from candidates table
+    // Fetch matched candidates summary joined with candidate profiles from candidate1 table
     const candidatesRes = await pool.query(`
       SELECT 
         o.id,
@@ -85,15 +85,15 @@ export async function GET(request: Request) {
         c.years_of_experience as "years_of_experience",
         c.seniority as "candidate_seniority",
         COALESCE(c.candidate_location, c.candidate_address) as "location"
-      FROM output o
-      LEFT JOIN candidates c ON TRIM(c.candidate_id) = TRIM(o.candidate_id)
+      FROM output1 o
+      LEFT JOIN candidate1 c ON TRIM(c.candidate_id) = TRIM(o.candidate_id)
       ORDER BY o.match_percent DESC NULLS LAST;
     `);
 
-    // Fetch total distinct matched candidates across all jobs in output
+    // Fetch total distinct matched candidates across all jobs in output1
     const totalCandidatesRes = await pool.query(`
       SELECT COUNT(DISTINCT candidate_id) as count
-      FROM output;
+      FROM output1;
     `).catch(() => ({ rows: [{ count: '0' }] }));
     const totalMatchedCandidates = parseInt(totalCandidatesRes.rows[0]?.count || '0', 10);
 
@@ -124,7 +124,7 @@ export async function GET(request: Request) {
       totalMatchedCandidates,
     });
   } catch (error: any) {
-    console.error('Error fetching job_descriptions:', error);
+    console.error('Error fetching job_descriptions1:', error);
     return NextResponse.json(
       { error: error.message || 'Failed to fetch job descriptions from database' },
       { status: 500 }

@@ -41,7 +41,7 @@ const createPrismaClient = () => {
         name: {
           needs: { fname: true, lname: true },
           compute(c) {
-            return `${c.fname} ${c.lname}`.trim();
+            return `${c.fname || ''} ${c.lname || ''}`.trim() || 'Candidate';
           },
         },
       },

@@ -26,6 +26,10 @@ export async function POST(
       return NextResponse.json({ error: 'Candidate not found.' }, { status: 404 });
     }
 
+    if (!candidate.email) {
+      return NextResponse.json({ error: 'Candidate has no email address.' }, { status: 400 });
+    }
+
     let assessmentToken = candidate.assessmentToken;
     if (!assessmentToken) {
       assessmentToken = crypto.randomUUID();
@@ -42,7 +46,7 @@ export async function POST(
     // Dispatch email invitation again
     await sendAssessmentInviteEmail({
       candidateEmail: candidate.email,
-      candidateName: `${candidate.fname} ${candidate.lname}`.trim(),
+      candidateName: `${candidate.fname || ''} ${candidate.lname || ''}`.trim() || 'Candidate',
       jobTitle: candidate.job?.title || candidate.currentJobTitle || '',
       token: assessmentToken,
     });

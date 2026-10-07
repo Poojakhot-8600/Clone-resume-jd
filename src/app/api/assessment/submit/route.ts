@@ -131,7 +131,7 @@ export async function POST(request: Request) {
     try {
       console.log(`[API assessment/submit] Evaluating responses for candidate ${candidate.name}...`);
       const evaluation = await evaluateAssessment({
-        jobId: candidate.positionId.toString(),
+        jobId: candidate.positionId ? candidate.positionId.toString() : '',
         candidateId: candidate.id,
         questions: assessment.questions as any[],
         answers: answers as Record<string, string>,

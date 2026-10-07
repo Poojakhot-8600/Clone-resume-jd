@@ -48,7 +48,7 @@ export interface CandidateScorecardData {
   explanation?: any;
   created_at?: string | null;
 
-  // Joined from candidates table:
+  // Joined from candidate1 table:
   phone?: string | null;
   current_job_title?: string | null;
   current_company?: string | null;

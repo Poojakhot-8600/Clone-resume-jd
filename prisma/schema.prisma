@@ -87,11 +87,11 @@ model QuestionBank {
 
 model Candidate {
   id                String           @id @default(uuid())
-  positionId        BigInt           @map("position_id")
+  positionId        BigInt?          @map("position_id")
   candidateId       String?          @map("candidate_id")
-  fname             String           @map("candidate_fname") @db.VarChar(100)
-  lname             String           @map("candidate_lname") @db.VarChar(100)
-  email             String           @map("candidate_email") @db.VarChar(255)
+  fname             String?          @map("candidate_fname") @db.VarChar(100)
+  lname             String?          @map("candidate_lname") @db.VarChar(100)
+  email             String?          @map("candidate_email") @db.VarChar(255)
   createdAt         DateTime         @default(now()) @map("created_at")
 
   // Keep our application-specific fields:
@@ -110,7 +110,7 @@ model Candidate {
   resumeUrl         String?          @map("resume_url")
 
   // Relations:
-  job               Job              @relation(fields: [positionId], references: [id], onDelete: Cascade)
+  job               Job?             @relation(fields: [positionId], references: [id], onDelete: Cascade)
   assessments       Assessment[]
   booking           SlotBooking?
 
@@ -118,7 +118,7 @@ model Candidate {
   status            String?          @default("Active")
   inactiveAt        DateTime?        @map("inactive_at")
 
-  @@map("candidates")
+  @@map("candidate1")
 }
 
 model Slot {

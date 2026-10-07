@@ -475,9 +475,9 @@ export default function CandidatesPage() {
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-xl font-bold tracking-tight text-neutral-900">Candidates Directory</h2>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
               <Database className="h-3 w-3" />
-              Synced with Supabase
+              table: candidate1
             </span>
           </div>
           <p className="text-xs text-neutral-500 mt-1">
@@ -506,7 +506,7 @@ export default function CandidatesPage() {
             <Users className="h-4 w-4 text-indigo-600" />
           </div>
           <p className="mt-2 text-2xl font-black text-neutral-900">{candidates.length}</p>
-          <span className="text-[11px] text-neutral-400">table: candidates</span>
+          <span className="text-[11px] text-neutral-400 font-mono">table: candidate1</span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs">
           <div className="flex items-center justify-between">
@@ -532,15 +532,21 @@ export default function CandidatesPage() {
 
       {/* Search & Filters */}
       <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:max-w-md">
-          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-neutral-400" />
-          <input
-            type="text"
-            placeholder="Search by name, ID, email, title, or company..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-neutral-200 bg-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-neutral-900"
-          />
+        <div className="flex items-center gap-2 w-full sm:max-w-xl">
+          <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-mono font-medium bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
+            <Database className="h-3 w-3" />
+            table: candidate1
+          </span>
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-neutral-400" />
+            <input
+              type="text"
+              placeholder="Search by name, ID, email, title, or company..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-neutral-200 bg-white placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-900 focus:border-neutral-900"
+            />
+          </div>
         </div>
         <div className="flex items-center gap-2 self-end sm:self-auto">
           <span className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">

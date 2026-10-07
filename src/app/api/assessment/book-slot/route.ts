@@ -127,15 +127,17 @@ export async function POST(request: Request) {
       return booking;
     });
 
-    // 6. Send Confirmation Email
-    await sendBookingConfirmationEmail({
-      candidateEmail: candidate.email,
-      candidateName: `${candidate.fname} ${candidate.lname}`.trim(),
-      jobTitle: candidate.job?.title || candidate.currentJobTitle || '',
-      startTime: slot.startTime,
-      endTime: slot.endTime,
-      token: candidate.assessmentToken || '',
-    });
+    // 6. Send Confirmation Email if candidate has email
+    if (candidate.email) {
+      await sendBookingConfirmationEmail({
+        candidateEmail: candidate.email,
+        candidateName: `${candidate.fname || ''} ${candidate.lname || ''}`.trim() || 'Candidate',
+        jobTitle: candidate.job?.title || candidate.currentJobTitle || '',
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+        token: candidate.assessmentToken || '',
+      });
+    }
 
     return NextResponse.json({
       success: true,
